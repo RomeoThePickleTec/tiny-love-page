@@ -78,7 +78,7 @@ export default function Recordatorios() {
       setTipoAlerta(null);
 
       const { data, error } = await supabase
-        .from<RecordatorioRow>("recordatorio")
+        .from("recordatorio")
         .select("id, titulo, fecha, mensaje")
         .order("fecha", { ascending: true });
 
@@ -89,7 +89,7 @@ export default function Recordatorios() {
         setAlerta("No se pudieron cargar los recordatorios en este momento.");
         setTipoAlerta("error");
       } else {
-        const registros = (data ?? []).map((item) => ({
+        const registros = ((data as RecordatorioRow[] | null) ?? []).map((item) => ({
           id: item.id,
           titulo: item.titulo,
           fecha: item.fecha,
@@ -117,7 +117,7 @@ export default function Recordatorios() {
     setTipoAlerta(null);
 
     const { data, error } = await supabase
-      .from<RecordatorioRow>("recordatorio")
+      .from("recordatorio")
       .insert([
         {
           titulo: titulo.trim(),
@@ -133,8 +133,9 @@ export default function Recordatorios() {
       setAlerta("No se pudo guardar tu recordatorio. Intenta nuevamente.");
       setTipoAlerta("error");
     } else if (data) {
+      const registro = data as RecordatorioRow;
       setRecordatorios((actuales) =>
-        [...actuales, data].sort(
+        [...actuales, registro].sort(
           (a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime(),
         ),
       );

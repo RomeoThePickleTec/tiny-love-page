@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Para Ella 💙
 
-## Getting Started
+Sitio romántico construido con Next.js (App Router) y TypeScript, listo para desplegarse en Vercel. Incluye recordatorios, cuenta regresiva, galería conectada a Supabase y reproductor de Spotify.
 
-First, run the development server:
+## Requisitos previos
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18 o superior
+- Una cuenta de Supabase con un bucket público llamado `fotos`
+- Una lista de reproducción de Spotify pública o compartible
+
+## Variables de entorno
+
+Crea un archivo `.env.local` (y replica los valores en Vercel) con:
+
+```
+NEXT_PUBLIC_TARGET_DATE=2025-12-24T00:00:00-06:00
+NEXT_PUBLIC_SPOTIFY_PLAYLIST_ID=tu_playlist_id
+NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_llave_anon
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Ajusta los valores para reflejar tu fecha especial y tus credenciales reales.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Desarrollo local
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Instala dependencias y arranca el servidor:
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Luego visita [http://localhost:3000](http://localhost:3000).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Supabase Storage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Crea un bucket público llamado `fotos`.
+2. Sube imágenes (idealmente `.jpg` o `.png`).
+3. Opcional: agrega metadatos `descripcion` a cada archivo para mostrar un texto personalizado durante el giro.
 
-## Deploy on Vercel
+La galería obtiene los archivos del bucket y genera automáticamente la URL pública, por lo que no necesitas redeployar al agregar nuevas fotos.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Despliegue en Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Haz push del proyecto a GitHub.
+2. Importa el repositorio en Vercel.
+3. Configura las mismas variables de entorno en el proyecto de Vercel.
+4. Despliega y disfruta.
+
+## Tecnologías
+
+- Next.js 16 (App Router) + React 19
+- TypeScript
+- Tailwind CSS (utilizando estilos globales)
+- Supabase Storage
+- Spotify Embed
+
+Hecho con amor para que puedas seguir actualizando tus recuerdos sin complicaciones.

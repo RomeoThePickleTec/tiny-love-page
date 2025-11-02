@@ -6,6 +6,7 @@ Sitio romántico construido con Next.js (App Router) y TypeScript, listo para de
 
 - Node.js 18 o superior
 - Una cuenta de Supabase con un bucket público llamado `fotos`
+- Una tabla `recordatorio` (columnas `titulo`, `fecha`, `mensaje`) y usuarios creados para autenticación con email/contraseña
 - Una lista de reproducción de Spotify pública o compartible
 
 ## Variables de entorno
@@ -32,13 +33,28 @@ npm run dev
 
 Luego visita [http://localhost:3000](http://localhost:3000).
 
-## Supabase Storage
+## Supabase
+
+### Storage
 
 1. Crea un bucket público llamado `fotos`.
 2. Sube imágenes (idealmente `.jpg` o `.png`).
 3. Opcional: agrega metadatos `descripcion` a cada archivo para mostrar un texto personalizado durante el giro.
 
 La galería obtiene los archivos del bucket y genera automáticamente la URL pública, por lo que no necesitas redeployar al agregar nuevas fotos.
+
+### Autenticación y base de datos
+
+1. Habilita el proveedor de correo electrónico/contraseña en Supabase Auth.
+2. Crea los usuarios que tendrán acceso (correo y contraseña).
+3. Define la tabla `recordatorio` con las columnas:
+   - `id` (integer, autoincrement, primary key)
+   - `titulo` (text)
+   - `fecha` (timestamp)
+   - `mensaje` (text)
+4. Ajusta las policies para permitir `select` e `insert` a usuarios autenticados.
+
+El sitio mostrará el formulario de inicio de sesión en `/login`. Una vez autenticado, tendrás acceso a la página principal y podrás crear nuevos recordatorios que se guardarán directamente en Supabase.
 
 ## Despliegue en Vercel
 
@@ -52,7 +68,7 @@ La galería obtiene los archivos del bucket y genera automáticamente la URL pú
 - Next.js 16 (App Router) + React 19
 - TypeScript
 - Tailwind CSS (utilizando estilos globales)
-- Supabase Storage
+- Supabase Storage y Supabase Auth
 - Spotify Embed
 
 Hecho con amor para que puedas seguir actualizando tus recuerdos sin complicaciones.

@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { getSupabaseBrowser } from "@/lib/supabaseClient";
 
 type Recordatorio = {
   id?: string | number;
@@ -33,15 +33,14 @@ const convertirFechaISO = (valor: string) => {
 };
 
 export default function Recordatorios() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
   const supabase = useMemo(() => {
-    if (!supabaseUrl || !supabaseKey) return null;
-    return createClient(supabaseUrl, supabaseKey, {
-      auth: { persistSession: false },
-    });
-  }, [supabaseUrl, supabaseKey]);
+    try {
+      return getSupabaseBrowser();
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }, []);
 
   const [recordatorios, setRecordatorios] = useState<Recordatorio[]>([]);
   const [titulo, setTitulo] = useState("");
